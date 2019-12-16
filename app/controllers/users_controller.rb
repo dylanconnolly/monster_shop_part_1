@@ -10,8 +10,10 @@ class UsersController < ApplicationController
     if user.save
       flash[:success] = "Account created!"
       redirect_to "/profile"
+    else
+      flash[:error] = "Incomplete form."
+      render :new
     end
-    flash[:error] = "Incomplete form."
   end
 
   def show
