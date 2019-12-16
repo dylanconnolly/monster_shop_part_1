@@ -11,6 +11,7 @@ RSpec.describe "user registration" do
     fill_in "Street Address", with: "123 Street Rd."
     fill_in "City", with: "Waco"
     fill_in "State", with: "TX"
+    fill_in "Zip Code", with: "12093"
     fill_in "Email Address", with: "gertrude@praisebetogertrude.org"
     fill_in "Password", with: "Gertrude1"
     fill_in "Confirm Password", with: "Gertrude1"
