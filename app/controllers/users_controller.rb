@@ -12,7 +12,10 @@ class UsersController < ApplicationController
       redirect_to "/profile"
     end
     flash[:error] = "Incomplete form."
-    require "pry"; binding.pry
+  end
+
+  def show
+
   end
 
   private
