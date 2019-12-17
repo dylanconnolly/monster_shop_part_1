@@ -9,6 +9,7 @@ class UsersController < ApplicationController
 
     if user.save
       flash[:success] = "Account created!"
+      session[:user_id] = user.id
       redirect_to "/profile"
     else
       flash[:error] = "Incomplete form."
@@ -17,7 +18,7 @@ class UsersController < ApplicationController
   end
 
   def show
-
+    @user = User.find(session[:user_id])
   end
 
   private
