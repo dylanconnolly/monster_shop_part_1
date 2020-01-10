@@ -14,7 +14,7 @@ class Merchant::CouponsController < Merchant::BaseController
       flash[:success] = "Coupon succesfully created!"
       redirect_to merchant_coupons_path
     else
-      flash[:error] = "Error"
+      flash[:error] = @coupon.errors.full_messages.to_sentence
       render :new
     end
   end
