@@ -19,4 +19,11 @@ RSpec.describe "as a merchant admin" do
 
     expect(current_path).to eq("/merchant/coupons")
   end
+
+  it "I can create a new coupon from the coupon index" do
+
+    visit '/merchant/coupons'
+
+    click_link("Create New Coupon")
+  end
 end
