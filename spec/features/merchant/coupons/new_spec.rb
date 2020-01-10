@@ -39,4 +39,43 @@ RSpec.describe "as a merchant admin" do
     expect(page).to have_content(coupon.code)
     expect(page).to have_content(coupon.percent_off)
   end
+
+  it "I receive a flash error if coupon form is not complete, name/code is not unique, percent is not between 0 and 100" do
+    visit '/merchant/coupons'
+
+    click_link("Create New Coupon")
+
+    fill_in :coupon_name, with: "Summer Deal"
+    fill_in :coupon_code, with: "SUMMER20"
+
+    click_on "Create Coupon"
+
+    expect(page).to have_content("Percent off can't be blank")
+
+    fill_in :coupon_percent_off, with: 0
+
+    click_on "Create Coupon"
+
+    expect(page).to have_content("Percent off must be greater than 0")
+
+    fill_in :coupon_percent_off, with: 101
+
+    click_on "Create Coupon"
+
+    expect(page).to have_content("Percent off must be less than or equal to 100")
+
+    fill_in :coupon_percent_off, with: 15
+
+    click_on "Create Coupon"
+
+    click_link("Create New Coupon")
+
+    fill_in :coupon_name, with: "Summer Deal"
+    fill_in :coupon_code, with: "SUMMER20"
+    fill_in :coupon_percent_off, with: 25
+
+    click_on "Create Coupon"
+
+    expect(page).to have_content("Name has already been taken and Code has already been taken")
+  end
 end
