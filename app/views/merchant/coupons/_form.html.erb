@@ -1,0 +1,9 @@
+<%= form_for @coupon do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+  <%= f.label :code %>
+  <%= f.text_field :code %>
+  <%= f.label :percent_off %>
+  <%= f.text_field :percent_off %>
+  <%= f.submit %>
+<% end %>
