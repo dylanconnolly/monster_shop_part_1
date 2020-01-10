@@ -9,6 +9,19 @@ class Merchant::CouponsController < Merchant::BaseController
   end
 
   def create
-    
+    @coupon = current_user.merchant.coupons.new(coupon_params)
+    if @coupon.save
+      flash[:success] = "Coupon succesfully created!"
+      redirect_to merchant_coupons_path
+    else
+      flash[:error] = "Error"
+      render :new
+    end
   end
+
+  private
+
+    def coupon_params
+      params.require(:coupon).permit(:name, :code, :percent_off)
+    end
 end
