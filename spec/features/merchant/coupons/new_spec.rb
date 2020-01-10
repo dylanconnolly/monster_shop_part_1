@@ -25,5 +25,18 @@ RSpec.describe "as a merchant admin" do
     visit '/merchant/coupons'
 
     click_link("Create New Coupon")
+
+    fill_in :coupon_name, with: "Summer Deal"
+    fill_in :coupon_code, with: "SUMMER20"
+    fill_in :coupon_percent_off, with: 20
+
+    click_on "Create Coupon"
+
+    coupon = Coupon.last
+
+    expect(current_path).to eq("/merchant/coupons")
+    expect(page).to have_content(coupon.name)
+    expect(page).to have_content(coupon.code)
+    expect(page).to have_content(coupon.percent_off)
   end
 end
