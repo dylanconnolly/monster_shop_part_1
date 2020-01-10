@@ -1,5 +1,7 @@
 class Coupon < ApplicationRecord
-  validates_presence_of :name, uniqueness: true
-  validates_presence_of :code, uniqueness: true
+  validates :name, uniqueness: true, presence: true
+  validates :code, uniqueness: true, presence: true
   validates_presence_of :percent_off
+
+  belongs_to :merchant
 end
