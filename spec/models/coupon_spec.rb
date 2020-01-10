@@ -8,4 +8,8 @@ RSpec.describe Coupon do
     it {should validate_uniqueness_of :name}
     it {should validate_uniqueness_of :code}
   end
+
+  describe "relationships" do
+    it {should belong_to :merchant}
+  end
 end
