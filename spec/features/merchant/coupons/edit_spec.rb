@@ -33,4 +33,26 @@ RSpec.describe "as a merchant admin" do
     expect(page).to have_content("Winter Savings")
     expect(page).to_not have_content("Summer Deal")
   end
+
+  it "If every form on the field is not filled in when updating, a flash error message is shown and the I see the form to fill out again" do
+    visit '/merchant/coupons'
+
+    within "#coupon-#{@coupon_2.id}" do
+      click_link "Edit Coupon"
+    end
+
+    fill_in :coupon_name, with: ""
+
+    click_on "Update Coupon"
+
+    expect(page).to have_content("Name can't be blank")
+
+    fill_in :coupon_name, with: "New Coupon"
+
+    click_on "Update Coupon"
+
+    @coupon_2.reload
+
+    expect(@coupon_2.name).to eq("New Coupon")
+  end
 end
