@@ -27,8 +27,9 @@ RSpec.describe "as a merchant admin" do
 
     click_on "Update Coupon"
 
-    expect(current_path).to eq('merchant/coupons')
+    expect(current_path).to eq('/merchant/coupons')
 
+    expect(page).to have_content("Coupon updated successfully!")
     expect(page).to have_content("Winter Savings")
     expect(page).to_not have_content("Summer Deal")
   end
