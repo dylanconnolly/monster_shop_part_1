@@ -1,7 +1,10 @@
 <%= link_to "Create New Coupon", new_merchant_coupon_path %>
 
 <% @coupons.each do |coupon| %>
-  <%= coupon.name %>
-  <%= coupon.code %>
-  <%= coupon.percent_off %>
+  <section id="coupon-<%= coupon.id %>">
+    <%= coupon.name %>
+    <%= coupon.code %>
+    <%= coupon.percent_off %>
+    <%= link_to "Edit Coupon", edit_merchant_coupon_path(coupon) %>
+  </section>
 <% end %>
