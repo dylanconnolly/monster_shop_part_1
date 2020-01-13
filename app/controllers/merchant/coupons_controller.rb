@@ -1,11 +1,11 @@
 class Merchant::CouponsController < Merchant::BaseController
 
-  def new
-    @coupon = current_user.merchant.coupons.new
-  end
-
   def index
     @coupons = Coupon.all
+  end
+
+  def new
+    @coupon = current_user.merchant.coupons.new
   end
 
   def create
@@ -17,6 +17,10 @@ class Merchant::CouponsController < Merchant::BaseController
       flash[:error] = @coupon.errors.full_messages.to_sentence
       render :new
     end
+  end
+
+  def edit
+    @coupon = Coupon.find(params[:id])
   end
 
   private
