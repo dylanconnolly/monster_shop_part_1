@@ -23,7 +23,7 @@ RSpec.describe "as a merchant admin" do
     end
 
     fill_in :coupon_name, with: "Winter Savings"
-    fill_in :percent_off, with: 12
+    fill_in :coupon_percent_off, with: 12
 
     click_on "Update Coupon"
 
