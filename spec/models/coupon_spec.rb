@@ -11,5 +11,6 @@ RSpec.describe Coupon do
 
   describe "relationships" do
     it {should belong_to :merchant}
+    it {should have_many :orders}
   end
 end
