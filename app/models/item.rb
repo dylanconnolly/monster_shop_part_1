@@ -31,6 +31,10 @@ class Item <ApplicationRecord
     # SELECT items.*, sum(item_orders.quantity) AS total_quantity FROM items LEFT JOIN item_orders ON items.id = item_orders.item_id GROUP BY items.id;
   end
 
+  def percent_discount(integer)
+    price * ((100 - integer).to_f / 100)
+  end
+
   def self.deactivate_items
     update_all(:active? => false)
   end

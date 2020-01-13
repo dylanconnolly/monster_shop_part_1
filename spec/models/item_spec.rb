@@ -49,6 +49,12 @@ describe Item, type: :model do
       order_1.item_orders.create(item: @chain, price: @chain.price, quantity: 2)
       expect(@chain.no_orders?).to eq(false)
     end
+
+    it "percent_discount(integer)" do
+      expect(@chain.percent_discount(20)).to eq(40)
+      expect(@chain.percent_discount(50)).to eq(25)
+      expect(@chain.percent_discount(45).round(2)).to eq(27.5)
+    end
   end
 
   describe "class methods" do
