@@ -30,6 +30,12 @@ RSpec.describe "users can use coupons" do
       click_on "Apply"
 
       expect(page).to have_content("Coupon code applied!")
+
+      fill_in :coupon_code, with: "FAKECODE"
+
+      click_on "Apply"
+
+      expect(page).to have_content("Invalid coupon code.")
     end
   end
 end
