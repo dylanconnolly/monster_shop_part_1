@@ -34,6 +34,11 @@ class Merchant::CouponsController < Merchant::BaseController
     end
   end
 
+  def destroy
+    Coupon.destroy(params[:id])
+    redirect_to merchant_coupons_path
+  end
+
   private
 
     def coupon_params

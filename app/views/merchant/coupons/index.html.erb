@@ -6,5 +6,8 @@
     <%= coupon.code %>
     <%= coupon.percent_off %>
     <%= link_to "Edit Coupon", edit_merchant_coupon_path(coupon) %>
+    <% if coupon.orders.empty? %>
+      <%= link_to "Delete Coupon", merchant_coupon_path(coupon), method: :delete %>
+    <% end %>
   </section>
 <% end %>
