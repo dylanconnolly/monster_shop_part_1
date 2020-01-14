@@ -1,7 +1,7 @@
 class Merchant::CouponsController < Merchant::BaseController
 
   def index
-    @coupons = Coupon.all
+    @coupons = Coupon.where(merchant_id: current_user.merchant.id)
   end
 
   def new
@@ -9,7 +9,7 @@ class Merchant::CouponsController < Merchant::BaseController
   end
 
   def create
-    @coupon = current_user.merchant.coupons.new(coupon_params)
+    @coupon = current_user.merchant.coupons.create(coupon_params)
     if @coupon.save
       flash[:success] = "Coupon succesfully created!"
       redirect_to merchant_coupons_path

@@ -43,7 +43,7 @@
         </td>
         <td><p><%= item_order.item.description %></td>
         <td><p><%= link_to item_order.item.merchant.name, "/merchants/#{item_order.item.merchant.id}"%></p></td>
-        <td><p><%= number_to_currency(item_order.price)%></p></td>
+        <td><p><%= number_to_currency(item_order.price/100)%></p></td>
         <td><p><%= item_order.quantity%></p></td>
         <td><p><%= number_to_currency(item_order.subtotal)%></p></td>
     </tr>

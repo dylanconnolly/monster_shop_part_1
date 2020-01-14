@@ -26,7 +26,7 @@
         </p>
       </td>
       <td>
-        <p><%=number_to_currency(item.price)%></p>
+        <p><%=number_to_currency(item.price.to_f/100)%></p>
       </td>
       <td>
         <center>
@@ -44,7 +44,17 @@
     </tr>
   <% end %>
 </table>
-  <p>Total: <%= number_to_currency(cart.total) %></p>
+  <% if session[:coupon] == nil %>
+    <p>Total: <%= number_to_currency(cart.total) %></p>
+  <% else %>
+    <p>Discounted Total: <%= number_to_currency(cart.discounted_total(session[:coupon])) %></p>
+  <% end %>
+  <p>Coupon Code: </p>
+  <%= form_tag "/coupons" do %>
+    <%= label_tag :coupon_code %>
+    <%= text_field_tag :coupon_code %>
+    <%= submit_tag "Apply" %>
+  <% end %>
   <p><%= link_to "Empty Cart", "/cart", method: :delete %></p>
   <p><%= link_to "Checkout", "/orders/new", method: :get %></p>
   <% if current_user == nil %>

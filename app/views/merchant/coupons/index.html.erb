@@ -1,19 +1,23 @@
 <%= link_to "Create New Coupon", new_merchant_coupon_path %>
 
+<% if @coupons != [] %>
 <table id="active-coupons">
   <tr>
     <th>Coupon Name</th>
     <th>Code</th>
     <th>Percent Off</th>
   </tr>
-<% @coupons.each do |coupon| %>
-  <tr id="coupon-<%= coupon.id %>">
-    <td><%= coupon.name %></td>
-    <td><%= coupon.code %></td>
-    <td><%= coupon.percent_off %></td>
-    <td><%= link_to "Edit Coupon", edit_merchant_coupon_path(coupon) %></td>
-    <% if coupon.orders.empty? %>
-      <td><%= link_to "Delete Coupon", merchant_coupon_path(coupon), method: :delete %></td>
-    <% end %>
-  </tr>
+  <% @coupons.each do |coupon| %>
+    <tr id="coupon-<%= coupon.id %>">
+      <td><%= coupon.name %></td>
+      <td><%= coupon.code %></td>
+      <td><%= coupon.percent_off %></td>
+      <td><%= link_to "Edit Coupon", edit_merchant_coupon_path(coupon) %></td>
+      <% if coupon.orders.empty? %>
+        <td><%= link_to "Delete Coupon", merchant_coupon_path(coupon), method: :delete %></td>
+      <% end %>
+    </tr>
+  <% end %>
+<% else %>
+  You do not have any coupons.
 <% end %>

@@ -56,6 +56,8 @@ Rails.application.routes.draw do
   get "/profile/password/edit", to: "users#edit"
   patch "/profile/password", to: "users#update"
 
+  post "/coupons", to: "user_coupon#create"
+
   namespace :merchant do
     get '/', to: "merchant#show"
     get '/:merchant_id/items', to: "items#index"
