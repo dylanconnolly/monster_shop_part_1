@@ -48,6 +48,7 @@
     <p>Total: <%= number_to_currency(cart.total) %></p>
   <% else %>
     <p>Discounted Total: <%= number_to_currency(cart.discounted_total(session[:coupon])) %></p>
+    <p>Current Coupon: <%= @coupon.name %> (<%= @coupon.percent_off %>% off all items from <%= @coupon.merchant.name %>)</p>
   <% end %>
   <p>Coupon Code: </p>
   <%= form_tag "/coupons" do %>

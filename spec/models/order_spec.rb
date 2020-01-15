@@ -20,8 +20,8 @@ describe Order, type: :model do
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       @brian = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
 
-      @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
-      @pull_toy = @brian.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
+      @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 10000, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+      @pull_toy = @brian.items.create(name: "Pull Toy", description: "Great pull toy!", price: 1000, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
 
       user = User.create!(name: "User", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "user@user.com", password: "user", password_confirmation: "user")
       @order_1 = user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, status: 2)
@@ -79,6 +79,20 @@ describe Order, type: :model do
 
       expect(order_1.status).to eq('packaged')
       expect(order_2.status).to eq('pending')
+    end
+
+    it "coupon_total" do
+      coupon_1 = @meg.coupons.create!(name: "Summer Deal", code: "SUMMER20", percent_off: 20)
+      @order_1.update(coupon: coupon_1)
+      @order_1.reload
+
+      expect(@order_1.coupon_total).to eq(190)
+
+      coupon_2 = @brian.coupons.create!(name: "Winter Deal", code: "WINTER20", percent_off: 50)
+      @order_1.update(coupon: coupon_2)
+      @order_1.reload
+
+      expect(@order_1.coupon_total).to eq(215)
     end
   end
 end

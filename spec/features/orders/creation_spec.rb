@@ -12,7 +12,7 @@ RSpec.describe("Order Creation") do
     before(:each) do
       @mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
       @meg = Merchant.create!(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
-      @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+      @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 10000, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
       @paper = @mike.items.create(name: "Lined Paper", description: "Great for writing on!", price: 20, image: "https://cdn.vertex42.com/WordTemplates/images/printable-lined-paper-wide-ruled.png", inventory: 3)
       @pencil = @mike.items.create(name: "Yellow Pencil", description: "You can write on paper with it!", price: 200, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 100)
       visit "/items/#{@paper.id}"
@@ -72,7 +72,7 @@ RSpec.describe("Order Creation") do
         expect(page).to have_link("#{@tire.merchant.name}")
         expect(page).to have_content("$#{@tire.price/100.0}")
         expect(page).to have_content("1")
-        expect(page).to have_content("$1.00")
+        expect(page).to have_content("$100")
       end
 
       within "#item-#{@pencil.id}" do
@@ -84,7 +84,7 @@ RSpec.describe("Order Creation") do
       end
 
       within "#grandtotal" do
-        expect(page).to have_content("Total: $3.40")
+        expect(page).to have_content("Total: $102.40")
       end
 
       within "#datecreated" do
@@ -141,6 +141,33 @@ RSpec.describe("Order Creation") do
       expect(page).to have_content("Order Number: #{new_order.id}")
       expect(page).to have_content("Order Status: pending")
 
+    end
+
+    it "if a user has input a coupon on the cart page, it is applied to the order" do
+      coupon = @meg.coupons.create!(name: "Summer Deal", code: "SUMMER20", percent_off: 20)
+      user = User.create!(name: "User", address: "1230 East Street", city: "Boulder", state: "CO", zip: 98273, email: "user@user.com", password: "user", password_confirmation: "user")
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+
+      visit '/cart'
+
+      fill_in :coupon_code, with: "SUMMER20"
+
+      click_on "Apply"
+
+      click_on "Checkout"
+
+      fill_in :name, with: "Dylan"
+      fill_in :address, with: "123 Street"
+      fill_in :city, with: "Denver"
+      fill_in :state, with: "CO"
+      fill_in :zip, with: 12934
+
+      click_on "Create Order"
+
+      order = Order.last
+
+      expect(order.coupon).to eq(coupon)
     end
 
   end
