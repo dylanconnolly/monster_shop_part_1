@@ -16,6 +16,9 @@ class CartController < ApplicationController
 
   def show
     @items = cart.items
+    if session[:coupon]
+      @coupon = Coupon.find_by_code(session[:coupon])
+    end
   end
 
   def empty
