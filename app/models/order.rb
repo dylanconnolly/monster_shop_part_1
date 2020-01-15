@@ -14,7 +14,7 @@ class Order < ApplicationRecord
   enum status: ["pending", "packaged", "shipped", "cancelled"]
 
   def grandtotal
-    item_orders.sum('price * quantity')
+    item_orders.sum('price * quantity')/100
   end
 
   def total_items
@@ -32,5 +32,15 @@ class Order < ApplicationRecord
 
   def self.fulfill(order_id)
     Order.where(id: order_id).update(status: 1)
+  end
+
+  def coupon_total
+    item_orders.sum do |item_order|
+      if item_order.item.merchant == coupon.merchant
+        item_order.item.percent_discount(coupon.percent_off) * item_order.quantity
+      else
+        item_order.price * item_order.quantity
+      end
+    end/100
   end
 end
