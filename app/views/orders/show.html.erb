@@ -54,5 +54,11 @@
 <h1 align = "center">Order creation date: <%= @order.created_at.strftime('%m/%d/%Y') %></h1>
 <h1 align = "center">Order updated on: <%= @order.updated_at.strftime('%m/%d/%Y') %></h1>
 <h1 align = "center">Order status: <%= @order.status %></h1>
-<h1 align = "center">Order total: <%= number_to_currency(@order.grandtotal) %></h1>
+<% if @order.coupon == nil %>
+  <h1 align = "center">Order total: <%= number_to_currency(@order.grandtotal) %></h1>
+<% else %>
+<h1 align = "center">Original total: <%= number_to_currency(@order.grandtotal) %></h1>
+<h1 align = "center">Coupon applied: <%= @order.coupon.name %> for <%= @order.coupon.percent_off %>% off items from <%= @order.coupon.merchant.name %>.</h1>
+<h1 align = "center">Discounted total: <%= number_to_currency(@order.coupon_total) %></h1>
+<% end %>
 <h1 align = "center">Total items ordered: <%= @order.total_quantity %></h1>
