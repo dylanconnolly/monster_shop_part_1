@@ -8,8 +8,8 @@ RSpec.describe "Order show page", type: :feature do
 
     dog_shop = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
 
-    pull_toy = dog_shop.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
-    dog_bone = dog_shop.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
+    pull_toy = dog_shop.items.create(name: "Pull Toy", description: "Great pull toy!", price: 1000, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
+    dog_bone = dog_shop.items.create(name: "Dog Bone", description: "They'll love it!", price: 2100, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
 
     order_1 = user.orders.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
     item_order_1 = order_1.item_orders.create!(item: pull_toy, price: pull_toy.price, quantity: 1)
@@ -32,7 +32,7 @@ RSpec.describe "Order show page", type: :feature do
       expect(page).to have_content(item_order_1.item.name)
       expect(page).to have_content(item_order_1.item.description)
       expect(page).to have_content(item_order_1.quantity)
-      expect(page).to have_content(item_order_1.item.price)
+      expect(page).to have_content(item_order_1.item.price/100)
       click_on "#{item_order_1.item.id}-photo"
       expect(current_path).to eq("/items/#{item_order_1.item_id}")
     end
@@ -42,7 +42,7 @@ RSpec.describe "Order show page", type: :feature do
       expect(page).to have_content(item_order_2.item.name)
       expect(page).to have_content(item_order_2.item.description)
       expect(page).to have_content(item_order_2.quantity)
-      expect(page).to have_content(item_order_2.item.price)
+      expect(page).to have_content(item_order_2.item.price/100)
       click_on "#{item_order_2.item.id}-photo"
       expect(current_path).to eq("/items/#{item_order_2.item_id}")
     end
@@ -66,6 +66,6 @@ RSpec.describe "Order show page", type: :feature do
 
     expect(page).to have_content(coupon.name)
     expect(page).to have_content(coupon.percent_off)
-    expect(page).to have_content("Discounted Total Price: $176")
+    expect(page).to have_content("Discounted total: $176")
   end
 end
