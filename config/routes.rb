@@ -22,7 +22,6 @@ Rails.application.routes.draw do
   get "/cart", to: "cart#show"
   delete "/cart", to: "cart#empty"
   delete "/cart/:item_id", to: "cart#remove_item"
-
   delete "/cart/:item_id/quantity", to: "cart#remove_item_quantity"
 
   resources :orders, only: [:new, :create, :show, :update]
@@ -46,8 +45,8 @@ Rails.application.routes.draw do
 
   namespace :merchant do
     get '/', to: "merchant#show"
+    resources :orders, only: :show
     get '/:merchant_id/items', to: "items#index"
-    get '/orders/:id', to: 'orders#show'
     get '/:merchant_id/items/new', to: "items#new"
     post '/:merchant_id/items', to: "items#create"
     get '/orders/:order_id/item_orders/:item_order_id/fulfill', to: 'item_orders#fulfill'
