@@ -57,9 +57,6 @@ Rails.application.routes.draw do
   namespace :admin do
     get '/', to: "admins#show"
     resources :merchants, only: [:index, :update, :show]
-    # get '/merchants/', to: "merchants#index"
-    # patch '/merchants/:merchant_id', to: 'merchants#update'
-    # get '/merchants/:merchant_id', to: "merchants#show"
     get '/users', to: "users#index"
     get '/users/:user_id/', to: "users#show"
     get '/users/:user_id/profile/edit', to: "users#edit"
