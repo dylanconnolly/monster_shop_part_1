@@ -43,10 +43,11 @@ Rails.application.routes.draw do
 
   delete "/cart/:item_id/quantity", to: "cart#remove_item_quantity"
 
-  get "/orders/new", to: "orders#new"
-  post "/orders", to: "orders#create"
-  get "/orders/:id", to: "orders#show"
-  patch "/orders/:id", to: "orders#cancel"
+  resources :orders, only: [:new, :create, :show, :update]
+  # get "/orders/new", to: "orders#new"
+  # post "/orders", to: "orders#create"
+  # get "/orders/:id", to: "orders#show"
+  # patch "/orders/:id", to: "orders#cancel"
 
   get "/register", to: "users#new"
   post "/users", to: "users#create"
